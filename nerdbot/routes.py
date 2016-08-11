@@ -6,6 +6,7 @@ import json
 import feedparser
 
 FEED_URL="https://jovemnerd.com.br/feed-nerdcast/"
+feed = feedparser.parse(FEED_URL)  
 
 
 @app.route('/', methods=['GET'])
@@ -30,7 +31,6 @@ def webook():
             for messaging_event in entry["messaging"]:
 
                 if messaging_event.get("message"):
-                    feed = feedparser.parse(FEED_URL)  
 
                     sender_id = messaging_event["sender"]["id"]        
                     recipient_id = messaging_event["recipient"]["id"]  
