@@ -30,3 +30,7 @@ To run the application use the following command:
 python runserver.py
 ```
 
+
+## OR, you can deploy with heroku
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
+
