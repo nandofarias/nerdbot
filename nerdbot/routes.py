@@ -3,11 +3,14 @@ from flask import request
 import requests
 import os
 import json
+import feedparser
+
+FEED_URL="https://jovemnerd.com.br/feed-nerdcast/"
 
 
 @app.route('/', methods=['GET'])
 def verify():
-    
+
     if request.args.get("hub.mode") == "subscribe" and request.args.get("hub.challenge"):
         if not request.args.get("hub.verify_token") == os.environ["VERIFY_TOKEN"]:
             return "Verification token mismatch", 403
@@ -26,14 +29,14 @@ def webook():
         for entry in data["entry"]:
             for messaging_event in entry["messaging"]:
 
-                if messaging_event.get("message"):  
+                if messaging_event.get("message"):
+                    feed = feedparser.parse(FEED_URL)  
 
                     sender_id = messaging_event["sender"]["id"]        
                     recipient_id = messaging_event["recipient"]["id"]  
                     message_text = messaging_event["message"]["text"] 
-                    print(message_text)
 
-                    send_message(sender_id, "got it, thanks!")
+                    send_message(sender_id, feed.entries[0].title)
 
                 if messaging_event.get("delivery"):
                     pass
@@ -48,6 +51,8 @@ def webook():
 
 
 def send_message(recipient_id, message_text):
+
+    print(message_text)
 
     params = {
         "access_token": os.environ["PAGE_ACCESS_TOKEN"]
@@ -64,3 +69,5 @@ def send_message(recipient_id, message_text):
         }
     })
     r = requests.post("https://graph.facebook.com/v2.6/me/messages", params=params, headers=headers, data=data)
+
+    print(r)
