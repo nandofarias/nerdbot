@@ -52,8 +52,6 @@ def webook():
 
 def send_message(recipient_id, message_text):
 
-    print(message_text)
-
     params = {
         "access_token": os.environ["PAGE_ACCESS_TOKEN"]
     }
