@@ -7,6 +7,7 @@ import json
 
 @app.route('/', methods=['GET'])
 def verify():
+    
     if request.args.get("hub.mode") == "subscribe" and request.args.get("hub.challenge"):
         if not request.args.get("hub.verify_token") == os.environ["VERIFY_TOKEN"]:
             return "Verification token mismatch", 403
@@ -30,6 +31,7 @@ def webook():
                     sender_id = messaging_event["sender"]["id"]        
                     recipient_id = messaging_event["recipient"]["id"]  
                     message_text = messaging_event["message"]["text"] 
+                    print(message_text)
 
                     send_message(sender_id, "got it, thanks!")
 
@@ -47,8 +49,6 @@ def webook():
 
 def send_message(recipient_id, message_text):
 
-    print("sending message to {recipient}: {text}".format(recipient=recipient_id, text=message_text))
-
     params = {
         "access_token": os.environ["PAGE_ACCESS_TOKEN"]
     }
@@ -64,6 +64,3 @@ def send_message(recipient_id, message_text):
         }
     })
     r = requests.post("https://graph.facebook.com/v2.6/me/messages", params=params, headers=headers, data=data)
-    if r.status_code != 200:
-        print(r.status_code)
-        print(r.text)
