@@ -2,6 +2,5 @@
   "name": "nerdbot",
   "description": "A python chatbot for facebook",
   "repository": "https://github.com/NandoFarias/nerdbot",
-  "logo": "http://orig04.deviantart.net/4d25/f/2010/191/a/5/garoto_nerd_by_andresantos.jpg",
   "keywords": ["python", "chatbot", "facebook"]
 }

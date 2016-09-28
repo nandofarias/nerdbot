@@ -5,8 +5,7 @@ import os
 import json
 import feedparser
 
-FEED_URL="https://jovemnerd.com.br/feed-nerdcast/"
-feed = feedparser.parse(FEED_URL)  
+feed = feedparser.parse(os.environ["FEED_URL"])  
 
 
 @app.route('/', methods=['GET'])
